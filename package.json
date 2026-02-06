@@ -1,0 +1,32 @@
+{
+  "name": "@nemu-ai/test",
+  "module": "main.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun run --watch index.ts",
+    "build": "bun run scripts/build.ts",
+    "test": "bun run index.ts",
+    "lint": "eslint",
+    "start": "bun run out/index.js"
+  },
+  "devDependencies": {
+    "@eslint/json": "^1.0.0",
+    "@eslint/markdown": "^7.5.1",
+    "@types/bun": "latest",
+    "eslint": "^9.39.2",
+    "globals": "^17.3.0",
+    "jiti": "^2.6.1",
+    "typescript-eslint": "^8.54.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.35",
+    "@ai-sdk/devtools": "^0.0.11",
+    "@ai-sdk/openai-compatible": "^2.0.26",
+    "ai": "^6.0.67",
+    "zod": "^3.23.8"
+  }
+}
