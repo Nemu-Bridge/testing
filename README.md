@@ -21,7 +21,8 @@ If using Claude Code, update `.claude/settings.json` with your API credentials:
 {
   "env": {
     "GATE_URL": "https://gate.nemu.cc/anthropic/v1",
-    "GATE_API_KEY": "sk_your_api_key_here"
+    "GATE_API_KEY": "sk_your_api_key_here",
+    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1" // YOU MUST ADD THIS OR CLAUDE CODE WON'T WORK!!
   }
 }
 ```
