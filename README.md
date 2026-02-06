@@ -1,4 +1,4 @@
-# NEMU Test Framework
+# Testing Framework
 
 A modular test framework for testing AI model responses with callback-based result handling.
 
@@ -9,7 +9,7 @@ A modular test framework for testing AI model responses with callback-based resu
 Create a `.env` file in the test directory:
 
 ```env
-GATE_URL="http://localhost:5000/anthropic/v1"
+GATE_URL="https://gate.nemu.cc/anthropic/v1"
 GATE_API_KEY="sk_your_api_key_here"
 ```
 
@@ -20,7 +20,7 @@ If using Claude Code, update `.claude/settings.json` with your API credentials:
 ```json
 {
   "env": {
-    "GATE_URL": "http://localhost:5000/anthropic",
+    "GATE_URL": "https://gate.nemu.cc/anthropic/v1",
     "GATE_API_KEY": "sk_your_api_key_here"
   }
 }
@@ -35,7 +35,7 @@ Create a file in `tests/` ending with `_test.ts`:
 ```typescript
 import { runner } from "@/lib/runner";
 
-export const do_not_run = false;  // Set to true to skip this test
+export const DO_NOT_RUN = false; // Change to true to skip this test; defaults to false if not specified.
 
 export async function run_my_test(r: runner) {
   const response = r.add_generate_text(
@@ -43,16 +43,16 @@ export async function run_my_test(r: runner) {
     "cerebras/gpt-oss",
     { max_tokens: 150 }
   );
-  
+
   response.on_finish((result, index) => {
     console.log("Response:", result.text);
-    console.log("Usage:", result.totalUsage);
+    console.log("Usage:", result.usage);
   });
-  
+
   response.on_error((error, index) => {
     console.error("Error:", error.message);
   });
-  
+
   response.on_stop((index) => {
     console.log(`Test stopped at index ${index}`);
   });
@@ -62,6 +62,7 @@ export async function run_my_test(r: runner) {
 ### Available Methods
 
 **add_generate_text(prompt, model_name, options)**
+
 - `prompt`: The text prompt to send
 - `model_name`: Model identifier (default: "cerebras/gpt-oss")
 - `options`: Additional options like `{ max_tokens: 100 }`
@@ -80,10 +81,10 @@ Each test handle supports these callbacks (chainable):
 
 ### Skipping Tests
 
-Add `export const do_not_run = true;` to skip a test file:
+Add `export const DO_NOT_RUN = true;` to skip a test file:
 
 ```typescript
-export const do_not_run = true;  // This test will be skipped
+export const DO_NOT_RUN = true; // This test will be skipped
 
 export async function run_my_test(r: runner) {
   // ...
@@ -152,8 +153,8 @@ interface test_handle {
 
 ```typescript
 class runner {
-  add_generate_text(prompt, model?, options?): test_handle
-  add_streaming_text(prompt, model?, options?): test_handle
-  run(): Promise<(any | null)[]>
+  add_generate_text(prompt, model?, options?): test_handle;
+  add_streaming_text(prompt, model?, options?): test_handle;
+  run(): Promise<(any | null)[]>;
 }
 ```
